@@ -3,131 +3,493 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
-  <title>Оставить заявку</title>
-
+  <title>Билайн Бизнес — Облачная АТС и тарифы ПроБизнес</title>
   <style>
-    * {
-      box-sizing: border-box;
+    :root {
+      --yellow: #f7c600;
+      --dark:   #0f0f0f;
+      --card:   #191919;
+      --border: rgba(255,255,255,0.07);
+      --muted:  #888888;
     }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
 
     body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background: linear-gradient(135deg, #f7c600, #111111);
-      min-height: 100vh;
+      font-family: Arial, 'Helvetica Neue', sans-serif;
+      background: var(--dark);
+      color: #fff;
+      line-height: 1.5;
+    }
+
+    /* ─── HEADER ─────────────────────────────────── */
+    header {
+      padding: 14px 40px;
       display: flex;
       align-items: center;
-      justify-content: center;
-      padding: 20px;
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      background: rgba(15,15,15,0.97);
+      backdrop-filter: blur(12px);
+      z-index: 100;
     }
 
-    .card {
-      width: 100%;
-      max-width: 430px;
-      background: #ffffff;
-      border-radius: 22px;
-      padding: 28px;
-      box-shadow: 0 18px 45px rgba(0, 0, 0, 0.25);
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
     }
 
-    h1 {
-      margin: 0 0 10px;
-      font-size: 26px;
-      color: #111111;
+    .logo img {
+      height: 40px;
+      width: auto;
+      display: block;
+    }
+
+    .logo-fallback {
+      font-size: 20px;
+      font-weight: 800;
+      color: #fff;
+      letter-spacing: -0.5px;
+      display: none;
+    }
+
+    .logo-fallback span { color: var(--yellow); }
+
+    /* ─── LAYOUT ──────────────────────────────────── */
+    .container {
+      max-width: 1160px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    section { padding: 72px 0; }
+
+    .section-title {
+      font-size: clamp(22px, 3vw, 34px);
+      font-weight: 800;
+      margin-bottom: 12px;
       text-align: center;
+      letter-spacing: -0.5px;
     }
 
-    .subtitle {
-      margin: 0 0 24px;
-      color: #555555;
+    .section-title span { color: var(--yellow); }
+
+    .section-sub {
       text-align: center;
+      color: var(--muted);
       font-size: 15px;
-      line-height: 1.4;
+      margin-bottom: 48px;
+    }
+
+    .divider { height: 1px; background: var(--border); }
+
+    /* ─── FORM ────────────────────────────────────── */
+    .form-section {
+      padding: 64px 24px 72px;
+      background: radial-gradient(ellipse 80% 60% at 50% 0%,
+        rgba(247,198,0,0.13) 0%, transparent 70%);
+    }
+
+    .form-wrapper {
+      max-width: 460px;
+      margin: 0 auto;
+      background: #ffffff;
+      border-radius: 24px;
+      padding: 40px;
+      box-shadow: 0 32px 80px rgba(0,0,0,0.55),
+                  0 0 0 1px rgba(247,198,0,0.25);
+    }
+
+    .form-wrapper h2 {
+      font-size: 26px;
+      font-weight: 800;
+      color: #111;
+      text-align: center;
+      margin-bottom: 6px;
+      letter-spacing: -0.4px;
+    }
+
+    .form-sub {
+      color: #777;
+      text-align: center;
+      font-size: 14px;
+      margin-bottom: 28px;
     }
 
     label {
       display: block;
-      margin-bottom: 7px;
-      font-weight: 600;
-      color: #222222;
-      font-size: 14px;
+      margin-bottom: 6px;
+      font-weight: 700;
+      color: #444;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.7px;
     }
 
     input, select {
       width: 100%;
-      padding: 14px 15px;
-      margin-bottom: 17px;
-      border: 1px solid #d7d7d7;
+      padding: 14px 16px;
+      margin-bottom: 16px;
+      border: 1.5px solid #e0e0e0;
       border-radius: 12px;
-      font-size: 16px;
+      font-size: 15px;
       outline: none;
+      background: #f9f9f9;
+      color: #111;
+      transition: border-color 0.2s, box-shadow 0.2s;
     }
+
+    select option { background: #fff; color: #111; }
 
     input:focus, select:focus {
-      border-color: #f7c600;
-      box-shadow: 0 0 0 3px rgba(247, 198, 0, 0.25);
+      border-color: var(--yellow);
+      background: #fff;
+      box-shadow: 0 0 0 3px rgba(247,198,0,0.18);
     }
 
-    button {
+    input::placeholder { color: #bbb; }
+
+    .btn-submit {
       width: 100%;
       border: none;
       border-radius: 14px;
-      background: #111111;
-      color: #ffffff;
-      padding: 15px;
+      background: #111;
+      color: #fff;
+      padding: 16px;
       font-size: 17px;
-      font-weight: 700;
+      font-weight: 800;
       cursor: pointer;
-      transition: 0.2s;
+      transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
     }
 
-    button:hover {
-      background: #333333;
-      transform: translateY(-1px);
+    .btn-submit:hover {
+      background: #2a2a2a;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.35);
     }
 
-    .note {
+    .form-note {
       margin-top: 14px;
-      font-size: 12px;
-      color: #777777;
+      font-size: 11px;
+      color: #bbb;
       text-align: center;
-      line-height: 1.4;
+    }
+
+    /* ─── оАТС FEATURES ──────────────────────────── */
+    .features-bento {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      grid-template-rows: auto auto;
+      gap: 14px;
+    }
+
+    .fb {
+      background: var(--card);
+      border-radius: 18px;
+      padding: 28px;
+      border: 1px solid var(--border);
+      transition: border-color 0.25s, transform 0.25s;
+    }
+
+    .fb:hover {
+      border-color: rgba(247,198,0,0.4);
+      transform: translateY(-3px);
+    }
+
+    .fb-icon {
+      width: 52px;
+      height: 52px;
+      border-radius: 16px;
+      background: rgba(247,198,0,0.1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 18px;
+    }
+
+    .fb-icon svg {
+      width: 26px;
+      height: 26px;
+      stroke: var(--yellow);
+      fill: none;
+      stroke-width: 1.8;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .fb h3 {
+      font-size: 16px;
+      font-weight: 700;
+      line-height: 1.3;
+      margin-bottom: 8px;
+    }
+
+    .fb p {
+      font-size: 13px;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+
+    /* first two cards span wider on desktop */
+    .fb.wide { grid-column: span 1; }
+
+    @media (min-width: 900px) {
+      .features-bento { grid-template-columns: repeat(3, 1fr); }
+      .fb.wide-top { grid-column: span 1; }
+    }
+
+    /* ─── оАТС TARIFFS ───────────────────────────── */
+    .ats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 14px;
+      margin-bottom: 24px;
+    }
+
+    .ats-card {
+      background: var(--card);
+      border-radius: 20px;
+      padding: 26px 22px;
+      border: 1px solid var(--border);
+      display: flex;
+      flex-direction: column;
+      transition: transform 0.2s, border-color 0.2s;
+    }
+
+    .ats-card:hover {
+      transform: translateY(-5px);
+      border-color: var(--yellow);
+    }
+
+    .ats-card.popular {
+      border-color: rgba(247,198,0,0.45);
+      background: linear-gradient(150deg, #1d1600 0%, var(--card) 60%);
+    }
+
+    .ats-name {
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--yellow);
+      text-transform: uppercase;
+      letter-spacing: 1.3px;
+      margin-bottom: 16px;
+    }
+
+    .ats-specs {
+      list-style: none;
+      flex: 1;
+      margin-bottom: 22px;
+    }
+
+    .ats-specs li {
+      font-size: 14px;
+      color: #999;
+      padding: 7px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+      display: flex;
+      align-items: baseline;
+      gap: 6px;
+    }
+
+    .ats-specs li strong {
+      color: #fff;
+      font-size: 20px;
+      line-height: 1;
+    }
+
+    .ats-price {
+      font-size: 26px;
+      font-weight: 800;
+      color: #fff;
+    }
+
+    .ats-price em {
+      font-size: 13px;
+      font-weight: 400;
+      font-style: normal;
+      color: var(--muted);
+    }
+
+    /* Included options */
+    .included {
+      background: var(--card);
+      border: 1px solid rgba(247,198,0,0.2);
+      border-radius: 20px;
+      padding: 28px 30px;
+    }
+
+    .included-title {
+      color: var(--yellow);
+      font-size: 15px;
+      font-weight: 700;
+      margin-bottom: 16px;
+    }
+
+    .opts-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap: 8px;
+    }
+
+    .opt {
+      background: #242424;
+      border-radius: 10px;
+      padding: 9px 14px;
+      font-size: 12px;
+      color: #ccc;
+      text-align: center;
+    }
+
+    /* ─── ПроБизнес ──────────────────────────────── */
+    .pb-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 20px;
+    }
+
+    .pb-card {
+      background: var(--card);
+      border-radius: 22px;
+      padding: 30px;
+      border: 1px solid var(--border);
+      transition: transform 0.2s, border-color 0.2s;
+    }
+
+    .pb-card:hover {
+      transform: translateY(-5px);
+      border-color: var(--yellow);
+    }
+
+    .pb-badge {
+      display: inline-block;
+      background: var(--yellow);
+      color: #111;
+      font-weight: 800;
+      font-size: 13px;
+      padding: 5px 16px;
+      border-radius: 20px;
+      margin-bottom: 22px;
+    }
+
+    .pb-block {
+      margin-bottom: 18px;
+      padding-bottom: 18px;
+      border-bottom: 1px solid rgba(247,198,0,0.12);
+    }
+
+    .pb-block:last-of-type { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+
+    .pb-internet {
+      font-size: 34px;
+      font-weight: 800;
+      color: var(--yellow);
+      line-height: 1;
+      margin-bottom: 3px;
+    }
+
+    .pb-sms { font-size: 13px; color: var(--muted); margin-bottom: 12px; }
+
+    .min-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 7px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+    }
+
+    .min-row:last-child { border-bottom: none; }
+    .min-count { font-size: 14px; color: #ccc; }
+    .min-price { font-size: 16px; font-weight: 700; color: var(--yellow); }
+
+    .pb-perks { list-style: none; margin-top: 18px; }
+
+    .pb-perks li {
+      font-size: 13px;
+      color: #999;
+      padding: 5px 0;
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+    }
+
+    .pb-perks li::before {
+      content: "✓";
+      color: var(--yellow);
+      font-weight: 800;
+      flex-shrink: 0;
+    }
+
+    /* ─── FOOTER ──────────────────────────────────── */
+    footer {
+      background: #0a0a0a;
+      padding: 56px 24px 36px;
+      text-align: center;
+      border-top: 1px solid var(--border);
+    }
+
+    .footer-name  { font-size: 20px; font-weight: 700; margin-bottom: 10px; }
+    .footer-phone { font-size: 26px; font-weight: 800; color: var(--yellow); margin-bottom: 6px; }
+    .footer-email { font-size: 15px; color: var(--muted); margin-bottom: 40px; }
+
+    .disclaimer {
+      max-width: 800px;
+      margin: 0 auto 22px;
+      font-size: 11px;
+      color: #333;
+      line-height: 1.7;
+    }
+
+    .footer-copy { font-size: 12px; color: #2e2e2e; }
+
+    /* ─── RESPONSIVE ──────────────────────────────── */
+    @media (max-width: 860px) {
+      .features-bento {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 560px) {
+      header { padding: 14px 20px; }
+      section { padding: 52px 0; }
+      .form-wrapper { padding: 28px 20px; }
+      .features-bento { grid-template-columns: 1fr; }
     }
   </style>
 </head>
 
 <body>
-  <div class="card">
-    <h1>Оставить заявку</h1>
 
-    <p class="subtitle">
-      Заполните форму, и мы свяжемся с вами в удобное время.
-    </p>
+<!-- ─── HEADER ─── -->
+<header>
+  <div class="logo">
+    <img
+      src="https://static.beeline.ru/upload/images/business/main/v3/Beeblik_2025.png"
+      alt="билайн бизнес"
+      onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
+    >
+    <span class="logo-fallback">билайн <span>бизнес</span></span>
+  </div>
+</header>
+
+
+<!-- ─── ФОРМА ─── -->
+<section class="form-section">
+  <div class="form-wrapper">
+    <h2>Оставить заявку</h2>
+    <p class="form-sub">Заполните форму — менеджер свяжется с вами в удобное время</p>
 
     <form action="https://formsubmit.co/Anna.migacheva.84@mail.ru" method="POST">
-
       <input type="hidden" name="_subject" value="Новая заявка с сайта">
       <input type="hidden" name="_captcha" value="false">
       <input type="hidden" name="_template" value="table">
 
       <label for="name">ФИО</label>
-      <input 
-        type="text" 
-        id="name" 
-        name="ФИО" 
-        placeholder="Иванов Иван Иванович" 
-        required
-      >
+      <input type="text" id="name" name="ФИО" placeholder="Иванов Иван Иванович" required>
 
       <label for="phone">Контактный телефон</label>
-      <input 
-        type="tel" 
-        id="phone" 
-        name="Телефон" 
-        placeholder="+7 999 123-45-67" 
-        required
-      >
+      <input type="tel" id="phone" name="Телефон" placeholder="+7 999 123-45-67" required>
 
       <label for="time">Удобное время для связи</label>
       <select id="time" name="Удобное время для связи" required>
@@ -138,12 +500,269 @@
         <option value="В любое время">В любое время</option>
       </select>
 
-      <button type="submit">Отправить заявку</button>
+      <button type="submit" class="btn-submit">Отправить заявку</button>
     </form>
 
-    <div class="note">
-      Нажимая кнопку, вы отправляете контактные данные для обратной связи.
+    <p class="form-note">Нажимая кнопку, вы соглашаетесь на обработку персональных данных</p>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+
+<!-- ─── оАТС: ВОЗМОЖНОСТИ ─── -->
+<section>
+  <div class="container">
+    <h2 class="section-title">оАТС — <span>комплексное решение</span> для бизнеса</h2>
+    <p class="section-sub">Обрабатывайте до 100 и более входящих вызовов одновременно</p>
+
+    <div class="features-bento">
+
+      <div class="fb">
+        <div class="fb-icon">
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 3a4.5 4.5 0 0 1 0 9M3.6 15h16.8"/><path d="M12 12c0 4.5-2 7.5-4.5 9M12 12c0 4.5 2 7.5 4.5 9"/></svg>
+        </div>
+        <h3>Единый многоканальный номер</h3>
+        <p>Мобильный, городской или 8-800 — один номер для всех обращений клиентов</p>
+      </div>
+
+      <div class="fb">
+        <div class="fb-icon">
+          <svg viewBox="0 0 24 24"><path d="M8 6h8M8 10h8M8 14h4"/><rect x="3" y="3" width="18" height="18" rx="3"/><path d="m14 17 3 3 3-3"/></svg>
+        </div>
+        <h3>Сценарии распределения звонков</h3>
+        <p>Настройте маршруты между отделами и сотрудниками — никакой очереди и пропущенных</p>
+      </div>
+
+      <div class="fb">
+        <div class="fb-icon">
+          <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2A19.8 19.8 0 0 1 3.08 4.18 2 2 0 0 1 5.07 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L9.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+        </div>
+        <h3>Голосовое приветствие и меню</h3>
+        <p>IVR, приветствие по расписанию, музыка на удержании — всё в пару кликов</p>
+      </div>
+
+      <div class="fb">
+        <div class="fb-icon">
+          <svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/><path d="M7 8h10M7 11h6"/></svg>
+        </div>
+        <h3>Единая сеть с SIP-телефонами</h3>
+        <p>Объедините мобильные и офисные телефоны в одну корпоративную сеть</p>
+      </div>
+
+      <div class="fb">
+        <div class="fb-icon">
+          <svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/><path d="M8 10h8M8 13h5"/></svg>
+        </div>
+        <h3>Интеграции с CRM-системами</h3>
+        <p>Звонки прямо из CRM, автоматическое создание задач, история контактов</p>
+      </div>
+
+      <div class="fb">
+        <div class="fb-icon">
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/><path d="M3 3l18 18"/></svg>
+        </div>
+        <h3>Запись и статистика разговоров</h3>
+        <p>Онлайн-дашборды, записи звонков и аналитика эффективности рекламы</p>
+      </div>
+
     </div>
   </div>
+</section>
+
+<div class="divider"></div>
+
+
+<!-- ─── ТАРИФЫ оАТС ─── -->
+<section>
+  <div class="container">
+    <h2 class="section-title">Тарифы <span>оАТС</span></h2>
+    <p class="section-sub">Тестовый период <strong style="color:var(--yellow)">до 30 дней</strong> бесплатно</p>
+
+    <div class="ats-grid">
+
+      <div class="ats-card">
+        <div class="ats-name">Минимальный</div>
+        <ul class="ats-specs">
+          <li><strong>2</strong>&nbsp;многоканальных номера</li>
+          <li><strong>4</strong>&nbsp;пользователя</li>
+        </ul>
+        <div class="ats-price">965,8 ₽<em> /мес</em></div>
+      </div>
+
+      <div class="ats-card popular">
+        <div class="ats-name">Базовый</div>
+        <ul class="ats-specs">
+          <li><strong>3</strong>&nbsp;многоканальных номера</li>
+          <li><strong>10</strong>&nbsp;пользователей</li>
+        </ul>
+        <div class="ats-price">1&nbsp;819,8 ₽<em> /мес</em></div>
+      </div>
+
+      <div class="ats-card">
+        <div class="ats-name">Стандартный</div>
+        <ul class="ats-specs">
+          <li><strong>5</strong>&nbsp;многоканальных номеров</li>
+          <li><strong>20</strong>&nbsp;пользователей</li>
+        </ul>
+        <div class="ats-price">3&nbsp;548,2 ₽<em> /мес</em></div>
+      </div>
+
+      <div class="ats-card">
+        <div class="ats-name">Профессиональный</div>
+        <ul class="ats-specs">
+          <li><strong>10</strong>&nbsp;многоканальных номеров</li>
+          <li><strong>50</strong>&nbsp;пользователей</li>
+        </ul>
+        <div class="ats-price">8&nbsp;123,2 ₽<em> /мес</em></div>
+      </div>
+
+    </div>
+
+    <div class="included">
+      <div class="included-title">Включено во все тарифы</div>
+      <div class="opts-grid">
+        <div class="opt">Короткие номера</div>
+        <div class="opt">Внутренние звонки</div>
+        <div class="opt">Хранилище 1 Гб</div>
+        <div class="opt">Голосовое меню</div>
+        <div class="opt">Многоканальный номер</div>
+        <div class="opt">Аудиоконференции</div>
+        <div class="opt">Группа обзвона</div>
+        <div class="opt">Групповой АОН</div>
+        <div class="opt">Онлайн-статистика</div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<div class="divider"></div>
+
+
+<!-- ─── ТАРИФЫ ПроБизнес ─── -->
+<section>
+  <div class="container">
+    <h2 class="section-title">Тарифы <span>«ПроБизнес»</span></h2>
+    <p class="section-sub">Непубличная линейка — только для корпоративных клиентов</p>
+
+    <div class="pb-grid">
+
+      <!-- 1.0 -->
+      <div class="pb-card">
+        <div class="pb-badge">ПроБизнес 1.0</div>
+
+        <div class="pb-block">
+          <div class="pb-internet">10 Гб</div>
+          <div class="pb-sms">100 SMS</div>
+          <div class="min-row">
+            <span class="min-count">100 минут</span>
+            <span class="min-price">200 ₽</span>
+          </div>
+        </div>
+
+        <div class="pb-block">
+          <div class="pb-internet">∞ Гб</div>
+          <div class="pb-sms">300 SMS</div>
+          <div class="min-row">
+            <span class="min-count">600 минут</span>
+            <span class="min-price">305 ₽/мес</span>
+          </div>
+          <div class="min-row">
+            <span class="min-count">900 минут</span>
+            <span class="min-price">360 ₽/мес</span>
+          </div>
+        </div>
+
+        <ul class="pb-perks">
+          <li>ИИ-помощник от 490 ₽/мес</li>
+          <li>Звонки на Билайн — бесплатно</li>
+          <li>Перенос остатков трафика</li>
+          <li>Защита от спамзвонков</li>
+        </ul>
+      </div>
+
+      <!-- 2.0 -->
+      <div class="pb-card">
+        <div class="pb-badge">ПроБизнес 2.0</div>
+
+        <div class="pb-block">
+          <div class="pb-internet">∞ Гб</div>
+          <div class="pb-sms">500 SMS</div>
+          <div class="min-row">
+            <span class="min-count">1 200 минут</span>
+            <span class="min-price">410 ₽/мес</span>
+          </div>
+          <div class="min-row">
+            <span class="min-count">1 500 минут</span>
+            <span class="min-price">460 ₽/мес</span>
+          </div>
+        </div>
+
+        <ul class="pb-perks">
+          <li>ИИ-помощник от 490 ₽/мес</li>
+          <li>Звонки на Билайн — бесплатно</li>
+          <li>Перенос остатков трафика</li>
+          <li>Защита от спамзвонков</li>
+          <li>1 Гб в международном роуминге</li>
+        </ul>
+      </div>
+
+      <!-- 3.0 -->
+      <div class="pb-card">
+        <div class="pb-badge">ПроБизнес 3.0</div>
+
+        <div class="pb-block">
+          <div class="pb-internet">∞ Гб</div>
+          <div class="pb-sms">1 000 SMS</div>
+          <div class="min-row">
+            <span class="min-count">2 000 минут</span>
+            <span class="min-price">560 ₽/мес</span>
+          </div>
+          <div class="min-row">
+            <span class="min-count">2 500 минут</span>
+            <span class="min-price">610 ₽/мес</span>
+          </div>
+          <div class="min-row">
+            <span class="min-count">3 000 минут</span>
+            <span class="min-price">815 ₽/мес</span>
+          </div>
+          <div class="min-row">
+            <span class="min-count">5 000 минут</span>
+            <span class="min-price">1 020 ₽/мес</span>
+          </div>
+        </div>
+
+        <ul class="pb-perks">
+          <li>ИИ-помощник от 490 ₽/мес</li>
+          <li>Звонки на Билайн — бесплатно</li>
+          <li>Перенос остатков трафика</li>
+          <li>Защита от спамзвонков</li>
+          <li>2 Гб в международном роуминге</li>
+          <li>50 минут звонков в другие страны</li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+
+<!-- ─── FOOTER ─── -->
+<footer>
+  <div class="container">
+    <div class="footer-name">Мигачева Анна</div>
+    <div class="footer-phone">+7 909 853 8400</div>
+    <div class="footer-email">AMigacheva@beeline.ru</div>
+    <p class="disclaimer">
+      * Цены указаны в рублях с учётом НДС и не включают надбавку к тарифам 1,2%. Билайн вправе изменять стоимость услуг.
+      Функционал «запись разговора» доступен при наличии согласия абонента.
+    </p>
+    <div class="footer-copy">© 2026 ПАО «ВымпелКом» — билайн</div>
+  </div>
+</footer>
+
 </body>
 </html>
